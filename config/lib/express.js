@@ -94,16 +94,7 @@ module.exports.initMiddleware = function (app) {
   app.use(cookieParser());
   app.use(flash());
 
-  const monytLogger = monitor.getLogger();
 
-  monitor.listen(results => {
-    results
-      .then(metricses=>monytLogger.debug(metricses))
-  .catch(error=>monytLogger.error(error));
-});
-
-
-  app.use(monyt.middlewares());
 
 };
 
@@ -237,8 +228,22 @@ module.exports.configureSocketIO = function (app, db) {
  * Initialize the Express application
  */
 module.exports.init = function (db) {
+
+  const monytLogger = monitor.getLogger();
+
+  monitor.listen(results => {
+    results
+      .then(metricses=>monytLogger.debug(metricses))
+  .catch(error=>monytLogger.error(error));
+});
+
+
+
+
   // Initialize express app
   var app = express();
+
+  app.use(monyt.middlewares());
 
   // Initialize local variables
   this.initLocalVariables(app);
