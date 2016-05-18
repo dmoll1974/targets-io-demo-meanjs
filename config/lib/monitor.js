@@ -10,7 +10,7 @@ import Monyt, {
 const interval = 60000; //default is 30000(ms)
 
 const senders = [new GraphiteSender({
-    host: 'my.graphite.host.com',
+    host: 'localhost',
     port: '2003' //port of plaintext protocol
 })];
 
