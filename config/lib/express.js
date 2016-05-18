@@ -20,7 +20,14 @@ var config = require('../config'),
   path = require('path'),
   lusca = require('lusca');
 
-import monitor from './monitor';
+import Monyt, {
+    RequestCountMetrics,
+    ErrorCountMetrics,
+    MemoryMetrics,
+    GarbageCollectionMetrics,
+    EventLoopLagMetrics,
+    GraphiteSender
+} from 'monyt';
 
 
 
@@ -229,6 +236,29 @@ module.exports.configureSocketIO = function (app, db) {
  */
 module.exports.init = function (db) {
 
+
+  const interval = 15000; //default is 30000(ms)
+
+  const senders = [new GraphiteSender({
+    host: 'graphite',
+    port: '2003' //port of plaintext protocol
+  })];
+
+  const metricses = [
+    new RequestCountMetrics(),
+    new ErrorCountMetrics(),
+    new MemoryMetrics(),
+    new GarbageCollectionMetrics(),
+    new EventLoopLagMetrics()
+  ];
+
+  const monitor = new Monyt({
+    interval,
+    prefix: 'mean', //This could be server hostname or application name or clusterId and etc.
+    senders,
+    metricses
+  });
+
   const monytLogger = monitor.getLogger();
 
   monitor.listen(results => {
@@ -243,7 +273,7 @@ module.exports.init = function (db) {
   // Initialize express app
   var app = express();
 
-  app.use(monyt.middlewares());
+  app.use(monitor.middlewares());
 
   // Initialize local variables
   this.initLocalVariables(app);
