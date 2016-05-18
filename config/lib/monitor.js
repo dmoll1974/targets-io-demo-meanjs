@@ -24,7 +24,7 @@ const metricses = [
 
 const monitor = new Monyt({
     interval,
-    prefix: `${application}.${hostname}.${clusterId}`, //This could be server hostname or application name or clusterId and etc.
+    prefix: `mean`, //This could be server hostname or application name or clusterId and etc.
     senders,
     metricses
 });
