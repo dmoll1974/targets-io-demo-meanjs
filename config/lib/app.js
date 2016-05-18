@@ -9,16 +9,6 @@ var config = require('../config'),
   chalk = require('chalk'),
   seed = require('./seed');
 
-import monitor from './monitor';
-
-
-const logger = monitor.getLogger();
-
-monitor.listen(results => {
-  results
-    .then(metricses=>logger.debug(metricses))
-.catch(error=>logger.error(error));
-});
 
 
 function seedDB() {
@@ -49,7 +39,6 @@ module.exports.start = function start(callback) {
 
   _this.init(function (app, db, config) {
 
-    app.use(monyt.middlewares());
 
     // Start the app by listening on <port> at <host>
     app.listen(config.port, config.host, function () {

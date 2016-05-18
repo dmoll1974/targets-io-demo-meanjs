@@ -20,6 +20,10 @@ var config = require('../config'),
   path = require('path'),
   lusca = require('lusca');
 
+import monitor from './monitor';
+
+
+
 /**
  * Initialize local variables
  */
@@ -89,6 +93,18 @@ module.exports.initMiddleware = function (app) {
   // Add the cookie parser and flash middleware
   app.use(cookieParser());
   app.use(flash());
+
+  const logger = monitor.getLogger();
+
+  monitor.listen(results => {
+    results
+      .then(metricses=>logger.debug(metricses))
+  .catch(error=>logger.error(error));
+});
+
+
+  app.use(monyt.middlewares());
+
 };
 
 /**
