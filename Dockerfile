@@ -1,4 +1,3 @@
-# Build:
 # docker build -t meanjs/mean .
 #
 # Run:
@@ -12,7 +11,9 @@ MAINTAINER MEAN.JS
 
 # Install Utilities
 RUN apt-get update -q
-RUN apt-get install -yqq wget aptitude htop vim git traceroute dnsutils curl ssh sudo tree tcpdump nano psmisc gcc make build-essential libfreetype6 libfontconfig libkrb5-dev
+RUN apt-get install -yqq wget aptitude htop vim git traceroute dnsutils curl ssh sudo tree tcpdump nano psmisc gcc make build-essential libfreetype6 libfontconfig libkrb5-dev python2.7
+
+ENV PYTHON /usr/bin/python2.7
 
 # Install gem sass for grunt-contrib-sass
 RUN apt-get install -y ruby
@@ -23,7 +24,7 @@ RUN curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
 RUN sudo apt-get install -yq nodejs
 
 # Install MEAN.JS Prerequisites
-RUN npm install --quiet -g grunt-cli gulp bower yo mocha karma-cli pm2 forever
+RUN npm install --quiet -g grunt-cli gulp bower mocha karma-cli pm2 forever
 
 RUN mkdir /opt/mean.js
 RUN mkdir -p /opt/mean.js/public/lib
@@ -66,4 +67,4 @@ EXPOSE 5858:5858
 EXPOSE 35729:35729
 
 # Run MEAN.JS server
-CMD ["npm", "start"]
+ENTRYPOINT forever -c 'node --harmony' server.js
