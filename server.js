@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-require("babel/register");
+require("babel-core/register");
 
 var app = require('./config/lib/app');
 var server = app.start();
