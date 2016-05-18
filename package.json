@@ -69,6 +69,7 @@
     "validator": "~5.1.0"
   },
   "devDependencies": {
+    "babel-core": "^6.9.0",
     "coveralls": "~2.11.6",
     "eslint": "~2.2.0",
     "eslint-config-airbnb": "~6.0.2",
