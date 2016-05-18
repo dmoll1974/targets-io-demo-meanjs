@@ -11,12 +11,6 @@ var config = require('../config'),
 
 import monitor from './monitor';
 
-const logger = monitor.getLogger();
-
-monitor.listen(results => {
-  results.then(metricses=>logger.debug(metricses))
-.catch(error=>logger.error(error));
-});
 
 const logger = monitor.getLogger();
 
