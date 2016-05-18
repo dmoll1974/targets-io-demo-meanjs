@@ -9,6 +9,24 @@ var config = require('../config'),
   chalk = require('chalk'),
   seed = require('./seed');
 
+import monitor from './monitor';
+
+const logger = monitor.getLogger();
+
+monitor.listen(results => {
+  results.then(metricses=>logger.debug(metricses))
+.catch(error=>logger.error(error));
+});
+
+const logger = monitor.getLogger();
+
+monitor.listen(results => {
+  results
+    .then(metricses=>logger.debug(metricses))
+.catch(error=>logger.error(error));
+});
+
+
 function seedDB() {
   if (config.seedDB && config.seedDB.seed) {
     console.log(chalk.bold.red('Warning:  Database seeding is turned on'));
@@ -36,6 +54,8 @@ module.exports.start = function start(callback) {
   var _this = this;
 
   _this.init(function (app, db, config) {
+
+    app.use(monyt.middlewares());
 
     // Start the app by listening on <port> at <host>
     app.listen(config.port, config.host, function () {
