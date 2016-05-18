@@ -94,12 +94,12 @@ module.exports.initMiddleware = function (app) {
   app.use(cookieParser());
   app.use(flash());
 
-  const logger = monitor.getLogger();
+  const monytLogger = monitor.getLogger();
 
   monitor.listen(results => {
     results
-      .then(metricses=>logger.debug(metricses))
-  .catch(error=>logger.error(error));
+      .then(metricses=>monytLogger.debug(metricses))
+  .catch(error=>monytLogger.error(error));
 });
 
 
