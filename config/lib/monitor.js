@@ -7,7 +7,7 @@ import Monyt, {
     GraphiteSender
 } from 'monyt';
 
-const interval = 15000; //default is 30000(ms)
+const interval = 10000; //default is 30000(ms)
 
 const senders = [new GraphiteSender({
     host: 'graphite',
