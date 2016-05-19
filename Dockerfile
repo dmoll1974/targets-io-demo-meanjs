@@ -11,7 +11,7 @@ MAINTAINER MEAN.JS
 
 # Install Utilities
 RUN apt-get update -q
-RUN apt-get install -yqq wget aptitude htop vim git traceroute dnsutils curl ssh sudo tree tcpdump nano psmisc gcc make build-essential libfreetype6 libfontconfig libkrb5-dev python2.7
+RUN apt-get install -yqq wget aptitude htop vim git traceroute dnsutils curl ssh sudo tree tcpdump nano psmisc gcc make build-essential libfreetype6 libfontconfig libkrb5-dev python2.7 collectd
 
 ENV PYTHON /usr/bin/python2.7
 
