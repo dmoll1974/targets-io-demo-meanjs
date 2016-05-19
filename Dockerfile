@@ -24,7 +24,7 @@ RUN curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
 RUN sudo apt-get install -yq nodejs
 
 # Install MEAN.JS Prerequisites
-RUN npm install --quiet -g grunt-cli gulp bower mocha karma-cli pm2 forever
+RUN npm install --quiet -g grunt-cli gulp bower mocha karma-cli pm2 forever collectd
 
 RUN mkdir /opt/mean.js
 RUN mkdir -p /opt/mean.js/public/lib
@@ -67,4 +67,15 @@ EXPOSE 5858:5858
 EXPOSE 35729:35729
 
 # Run MEAN.JS server
-ENTRYPOINT forever -c 'node --harmony' server.js
+COPY collectd.conf /etc/collectd/
+
+
+COPY docker-entrypoint.sh /entrypoint.sh
+
+#RUN chown -R node:node /entrypoint.sh
+
+RUN chmod +x  /entrypoint.sh
+
+#USER node
+
+ENTRYPOINT ["/entrypoint.sh"]
