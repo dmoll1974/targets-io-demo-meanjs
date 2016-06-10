@@ -51,7 +51,7 @@ RUN npm cache clean
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Set development environment as default
-ENV NODE_ENV development
+ENV NODE_ENV production
 
 # Ports generic
 EXPOSE 80:80
