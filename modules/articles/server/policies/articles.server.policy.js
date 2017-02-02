@@ -3,7 +3,9 @@
 /**
  * Module dependencies
  */
-var acl = require('acl');
+var acl = require('acl'),
+winston = require('winston'),
+;
 
 // Using the memory backend
 acl = new acl(new acl.memoryBackend());
@@ -63,6 +65,8 @@ exports.isAllowed = function (req, res, next) {
         // Access granted! Invoke next middleware
         return next();
       } else {
+
+        winston.error('User' + req.user + ' is not authorized to ' + req.method.toLowerCase() + ' on route: ' + req.route.path);
         return res.status(403).json({
           message: 'User is not authorized'
         });
