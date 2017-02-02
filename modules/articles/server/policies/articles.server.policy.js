@@ -65,7 +65,7 @@ exports.isAllowed = function (req, res, next) {
         return next();
       } else {
 
-        winston.error('User' + req.user + ' is not authorized to ' + req.method.toLowerCase() + ' on route: ' + req.route.path);
+        winston.error('User' + req.user.username + ' is not authorized to ' + req.method.toLowerCase() + ' on route: ' + req.route.path);
         return res.status(403).json({
           message: 'User is not authorized'
         });
