@@ -7,7 +7,9 @@ var config = require('../config'),
   mongoose = require('./mongoose'),
   express = require('./express'),
   chalk = require('chalk'),
-  seed = require('./seed');
+  seed = require('./seed'),
+  winston = require('winston');
+
 
 
 
@@ -36,6 +38,37 @@ module.exports.init = function init(callback) {
 
 module.exports.start = function start(callback) {
   var _this = this;
+
+  //Better logging
+  winston.remove(winston.transports.Console);
+  if (config.isDevelopment) {
+    // only log to console in development environment
+    winston.add(winston.transports.Console, {
+      timestamp: true,
+      colorize: !config.isProduction,
+      level: config.logLevel
+    });
+  }
+
+  if (config.graylog.host !== undefined) {
+
+    console.log ("graylog host: " + config.graylog.host + ':' + config.graylog.port );
+
+    winston.add(require('winston-graylog2'), {
+      name: 'Graylog',
+      graylog: {
+        servers: [{host: config.graylog.host, port: config.graylog.port}],
+        facility: 'wily-export'
+      },
+      level: config.logLevel
+      /*,
+       staticMeta: {environment: config.environment, source: os.hostname()}*/
+    });
+  }else{
+
+    console.log ("No graylog host:port provided " );
+  }
+
 
   _this.init(function (app, db, config) {
 

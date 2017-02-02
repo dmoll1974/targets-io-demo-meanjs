@@ -7,6 +7,7 @@ var path = require('path'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
   mongoose = require('mongoose'),
   passport = require('passport'),
+  winston = require('winston'),
   User = mongoose.model('User');
 
 // URLs for which user can't be redirected on signin
@@ -30,7 +31,8 @@ exports.signup = function (req, res) {
   // Then save the user
   user.save(function (err) {
     if (err) {
-      return res.status(400).send({
+
+       return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
@@ -63,6 +65,8 @@ exports.signin = function (req, res, next) {
 
       req.login(user, function (err) {
         if (err) {
+
+          winston.error('Sign in failed for user: ' + user + " error: " + err);
           res.status(400).send(err);
         } else {
           res.json(user);
