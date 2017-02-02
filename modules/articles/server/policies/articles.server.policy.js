@@ -4,8 +4,7 @@
  * Module dependencies
  */
 var acl = require('acl'),
-winston = require('winston'),
-;
+winston = require('winston');
 
 // Using the memory backend
 acl = new acl(new acl.memoryBackend());
