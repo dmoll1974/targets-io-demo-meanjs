@@ -41,14 +41,14 @@ module.exports.start = function start(callback) {
 
   //Better logging
   winston.remove(winston.transports.Console);
-  if (config.isDevelopment) {
-    // only log to console in development environment
-    winston.add(winston.transports.Console, {
-      timestamp: true,
-      colorize: !config.isProduction,
-      level: config.logLevel
-    });
-  }
+  //if (config.isDevelopment) {
+  //  // only log to console in development environment
+  //  winston.add(winston.transports.Console, {
+  //    timestamp: true,
+  //    colorize: !config.isProduction,
+  //    level: config.logLevel
+  //  });
+  //}
 
   if (config.graylog.host !== undefined) {
 
@@ -58,9 +58,8 @@ module.exports.start = function start(callback) {
       name: 'Graylog',
       graylog: {
         servers: [{host: config.graylog.host, port: config.graylog.port}],
-        facility: 'wily-export'
       },
-      level: config.logLevel
+      level: 'INFO'
       /*,
        staticMeta: {environment: config.environment, source: os.hostname()}*/
     });
@@ -68,6 +67,8 @@ module.exports.start = function start(callback) {
 
     console.log ("No graylog host:port provided " );
   }
+
+  winston.info('Connected to Graylog!');
 
 
   _this.init(function (app, db, config) {
