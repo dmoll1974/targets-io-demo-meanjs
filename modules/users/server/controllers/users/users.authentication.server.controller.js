@@ -66,7 +66,9 @@ exports.signin = function (req, res, next) {
       req.login(user, function (err) {
         if (err) {
 
-          winston.error('Sign in failed for user: ' + user + " error: " + err);
+          console.log('Sign in failed for user: ' + user.username + " error: " + err);
+
+          winston.info('Sign in failed for user: ' + user.username + " error: " + err);
           res.status(400).send(err);
         } else {
           res.json(user);
