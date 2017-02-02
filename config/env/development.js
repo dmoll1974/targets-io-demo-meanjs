@@ -13,7 +13,7 @@ module.exports = {
     debug: process.env.MONGODB_DEBUG || false
   },
   graylog : {
-    host: "52.208.180.182",
+    host: "graylog",
     port: "12201"
   },
   log: {
