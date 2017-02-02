@@ -59,7 +59,7 @@ module.exports.start = function start(callback) {
       graylog: {
         servers: [{host: config.graylog.host, port: config.graylog.port}],
       },
-      level: 'INFO'
+      //level: 'INFO'
       /*,
        staticMeta: {environment: config.environment, source: os.hostname()}*/
     });
