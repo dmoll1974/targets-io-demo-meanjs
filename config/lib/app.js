@@ -58,6 +58,7 @@ module.exports.start = function start(callback) {
       name: 'Graylog',
       graylog: {
         servers: [{host: config.graylog.host, port: config.graylog.port}],
+        facility: "MEAN"
       },
       //level: 'INFO'
       /*,
