@@ -57,6 +57,8 @@ exports.signup = function (req, res) {
 exports.signin = function (req, res, next) {
   passport.authenticate('local', function (err, user, info) {
     if (err || !user) {
+      console.log('Sign in failed for user: ' + user.username + " error: " + err);
+      winston.info('Sign in failed for user: ' + user.username + " error: " + err);
       res.status(400).send(info);
     } else {
       // Remove sensitive data before login
@@ -66,9 +68,7 @@ exports.signin = function (req, res, next) {
       req.login(user, function (err) {
         if (err) {
 
-          console.log('Sign in failed for user: ' + user.username + " error: " + err);
 
-          winston.info('Sign in failed for user: ' + user.username + " error: " + err);
           res.status(400).send(err);
         } else {
           res.json(user);
